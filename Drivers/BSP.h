@@ -19,6 +19,7 @@
 #include "../Drivers/GPIO_MSP432.h"
 #include "../Drivers/INT_MSP432.h"
 #include "../Drivers/UART_MSP432.h"
+#include "../Drivers/TIMER32_MSP432.h"
 
 /* Definición de botones con su respectivo puerto. */
 

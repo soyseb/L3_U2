@@ -210,6 +210,7 @@ Drivers/ADC_MSP432.obj: C:/Users/intel14/workspace_v10/HVAC_UN_HILO_ORG/Drivers/
 Drivers/ADC_MSP432.obj: C:/Users/intel14/workspace_v10/HVAC_UN_HILO_ORG/Drivers/GPIO_MSP432.h
 Drivers/ADC_MSP432.obj: C:/Users/intel14/workspace_v10/HVAC_UN_HILO_ORG/Drivers/INT_MSP432.h
 Drivers/ADC_MSP432.obj: C:/Users/intel14/workspace_v10/HVAC_UN_HILO_ORG/Drivers/UART_MSP432.h
+Drivers/ADC_MSP432.obj: C:/Users/intel14/workspace_v10/HVAC_UN_HILO_ORG/Drivers/TIMER32_MSP432.h
 
 ../Drivers/ADC_MSP432.c:
 
@@ -630,4 +631,6 @@ C:/Users/intel14/workspace_v10/HVAC_UN_HILO_ORG/Drivers/GPIO_MSP432.h:
 C:/Users/intel14/workspace_v10/HVAC_UN_HILO_ORG/Drivers/INT_MSP432.h:
 
 C:/Users/intel14/workspace_v10/HVAC_UN_HILO_ORG/Drivers/UART_MSP432.h:
+
+C:/Users/intel14/workspace_v10/HVAC_UN_HILO_ORG/Drivers/TIMER32_MSP432.h:
 

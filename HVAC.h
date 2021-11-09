@@ -119,6 +119,7 @@ extern void INT_SWI(void);
 extern void HVAC_InicialiceIO   (void);
 extern void HVAC_InicialiceADC  (void);
 extern void HVAC_InicialiceUART (void);
+extern void System_InicialiceTIMER (void); // ESTO LO AÑADI PARA UTILIZAR EL "TIMER32"
 
 /* Funciones principales. */
 extern void HVAC_ActualizarEntradas(void);

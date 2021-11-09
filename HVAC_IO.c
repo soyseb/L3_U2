@@ -23,6 +23,31 @@ bool event = FALSE;            // Evento I/O que fuerza impresión inmediata.
 bool FAN_LED_State = 0;                                     // Estado led_FAN.
 const char* SysSTR[] = {"Cool","Off","Heat","Only Fan"};    // Control de los estados.
 
+/* **** SE DECLARARON LAS VARIABLES Y FUNCIONES PARA REALIZAR EL DALAY CON EL TIMER ******** */
+extern void Timer32_INT1 (void); // Función de interrupción.
+extern void Delay_ms (uint32_t time); // Función de delay.
+uint32_t tiempo = 5000;
+
+/*FUNCTION******************************************************************************
+*
+* Function Name    : System_InicialiceTIMER
+* Returned Value   : None.
+* Comments         :
+*    Controla los preparativos para poder usar TIMER32
+*
+*END***********************************************************************************/
+void System_InicialiceTIMER (void)
+{
+    T32_Init1();
+    Int_registerInterrupt(INT_T32_INT1, Timer32_INT1);
+    Int_enableInterrupt(INT_T32_INT1);
+
+}
+
+
+
+/*******************************************************************************************/
+
 /**********************************************************************************
  * Function: INT_SWI
  * Preconditions: Interrupción habilitada, registrada e inicialización de módulos.
@@ -40,6 +65,7 @@ void INT_SWI(void)
         HVAC_SetPointUp();
     else if(!GPIO_getInputPinValue(SETPOINT_PORT,BIT(SP_DOWN))) // Si se trata del botón para disminuir setpoint (SW2).
         HVAC_SetPointDown();
+
 
     return;
 }
@@ -340,11 +366,16 @@ void HVAC_PrintState(void)
                     SysSTR[EstadoEntradas.SystemState],
                     SetPoint);
         UART_putsf(MAIN_UART,state);
+
+        UART_putsf(MAIN_UART,"Pausa de 5 segundos\n\r");
+        Delay_ms(tiempo);
         sprintf(state,"Temperatura Actual: %0.2f°C %0.2f°F  Fan: %s\n\r\n\r",
                     TemperaturaActual,
                     ((TemperaturaActual*9.0/5.0) + 32),
                     FAN_LED_State?"On":"Off");
         UART_putsf(MAIN_UART,state);
+
+
     }
 }
 

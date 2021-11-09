@@ -210,6 +210,7 @@ Threads.obj: ../Drivers/ADC_MSP432.h
 Threads.obj: ../Drivers/GPIO_MSP432.h
 Threads.obj: ../Drivers/INT_MSP432.h
 Threads.obj: ../Drivers/UART_MSP432.h
+Threads.obj: ../Drivers/TIMER32_MSP432.h
 
 ../Threads.c:
 
@@ -630,4 +631,6 @@ C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/inc/system
 ../Drivers/INT_MSP432.h:
 
 ../Drivers/UART_MSP432.h:
+
+../Drivers/TIMER32_MSP432.h:
 

@@ -17,6 +17,7 @@ ORDERED_OBJS += \
 "./Drivers/ADC_MSP432.obj" \
 "./Drivers/GPIO_MSP432.obj" \
 "./Drivers/INT_MSP432.obj" \
+"./Drivers/TIMER32_MSP432.obj" \
 "./Drivers/UART_MSP432.obj" \
 "../Aux_files/MSP_EXP432P401R_TIRTOS.cmd" \
 -l"ti/display/lib/display.aem4f" \
@@ -157,14 +158,14 @@ all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 # Tool invocations
 HVAC_UN_HILO_ORG.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
-	@echo 'Invoking: ARM Linker'
+	@echo 'Invoking: Arm Linker'
 	"C:/ti_v10_1/ccs/tools/compiler/ti-cgt-arm_20.2.1.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --advice:power=none -g --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on -z -m"HVAC_UN_HILO_ORG.map" -i"C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source" -i"C:/ti/simplelink_msp432p4_sdk_3_40_01_02/kernel/tirtos/packages" -i"C:/ti_v10_1/ccs/tools/compiler/ti-cgt-arm_20.2.1.LTS/lib" --diag_wrap=off --display_error_number --warn_sections --xml_link_info="HVAC_UN_HILO_ORG_linkInfo.xml" --rom_model -o "HVAC_UN_HILO_ORG.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
 HVAC_UN_HILO_ORG.hex: $(EXE_OUTPUTS)
 	@echo 'Building secondary target: "$@"'
-	@echo 'Invoking: ARM Hex Utility'
+	@echo 'Invoking: Arm Hex Utility'
 	"C:/ti_v10_1/ccs/tools/compiler/ti-cgt-arm_20.2.1.LTS/bin/armhex" --diag_wrap=off -o "HVAC_UN_HILO_ORG.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building secondary target: "$@"'
 	@echo ' '
@@ -172,8 +173,8 @@ HVAC_UN_HILO_ORG.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "HVAC_IO.obj" "HVAC_Thread.obj" "Threads.obj" "Aux_files\system_msp432p401r.obj" "Drivers\ADC_MSP432.obj" "Drivers\GPIO_MSP432.obj" "Drivers\INT_MSP432.obj" "Drivers\UART_MSP432.obj" 
-	-$(RM) "HVAC_IO.d" "HVAC_Thread.d" "Threads.d" "Aux_files\system_msp432p401r.d" "Drivers\ADC_MSP432.d" "Drivers\GPIO_MSP432.d" "Drivers\INT_MSP432.d" "Drivers\UART_MSP432.d" 
+	-$(RM) "HVAC_IO.obj" "HVAC_Thread.obj" "Threads.obj" "Aux_files\system_msp432p401r.obj" "Drivers\ADC_MSP432.obj" "Drivers\GPIO_MSP432.obj" "Drivers\INT_MSP432.obj" "Drivers\TIMER32_MSP432.obj" "Drivers\UART_MSP432.obj" 
+	-$(RM) "HVAC_IO.d" "HVAC_Thread.d" "Threads.d" "Aux_files\system_msp432p401r.d" "Drivers\ADC_MSP432.d" "Drivers\GPIO_MSP432.d" "Drivers\INT_MSP432.d" "Drivers\TIMER32_MSP432.d" "Drivers\UART_MSP432.d" 
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
 	-@echo 'Finished clean'
 	-@echo ' '
