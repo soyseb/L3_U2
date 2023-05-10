@@ -10,7 +10,7 @@
 
 #include "hvac.h"                           // Incluye definición del sistema.
 
-/*****  SE DECLARARON LAS VARIABLES Y FUNCIONES PARA REALIZAR EL DALAY CON EL TIMER ******** */
+/*****  SE DECLARARON LAS VARIABLES Y FUNCIONES PARA REALIZAR EL DELAY CON EL TIMER ******** */
 bool retraso = false;
 void Timer32_INT1 (void); // Función de interrupción.
 void Delay_ms (uint32_t time); // Función de delay.
@@ -34,18 +34,30 @@ void *HVAC_Thread(void *arg0)
     HVAC_InicialiceADC();
     HVAC_InicialiceUART();
 
-    while(1)
+    EstadoEntradas.Damper1State = Off;  /*Se inicializan los estados en Off.*/
+    EstadoEntradas.Damper2State = Off;
+    EstadoEntradas.SequenceState = Off;
+    EstadoEntradas.SystemState = Off;
+    GPIO_setOutput(BSP_LED1_PORT,  BSP_LED1,  0); /* Nos aseguramos que estén apagados los led*/
+    GPIO_setOutput(BSP_LED2_PORT,  BSP_LED2,  0);
+    GPIO_setOutput(BSP_LED3_PORT,  BSP_LED3,  0);
+    GPIO_setOutput(BSP_LED4_PORT,  BSP_LED4,  0);
+
+    while(GPIO_getInputPinValue(SYSTEM_ON_PORT, BIT(SYSTEM_ON_BIT)) == 1);  /*Se espera para arrancar el sistema con el boton*/
+
+    EstadoEntradas.SystemState = On; /* Al presionar el botón, el systemstate se pone en on.*/
+    GPIO_setOutput(BSP_LED1_PORT,  BSP_LED1,  1); /*Se enciende el led rojo.*/
+
+    while(1) /*Se cicla en el while mandando llamar a estas dos entradas*/
     {
         HVAC_ActualizarEntradas();
-        HVAC_ActualizarSalidas();
         HVAC_PrintState();
-        HVAC_Heartbeat();
     }
 }
 
 
 
-/* *********  FUNCIONES PARA REALIZAR EL DALAY CON EL TIMER ********* */
+/* *********  FUNCIONES PARA REALIZAR EL DELAY CON EL TIMER ********* */
 void Delay_ms(uint32_t time)
 {
     T32_EnableTimer1(); // Habilita timer.

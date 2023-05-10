@@ -16,7 +16,7 @@
 #define __MSP432P401R__
 #define  __SYSTEM_CLOCK    48000000 // Frecuencias funcionales recomendadas: 12, 24 y 48 Mhz.
 
-/* Archivos de cabecera importantes. */
+// Archivos de cabecera importantes.
 #include <unistd.h>
 #include <stdint.h>
 #include <stddef.h>
@@ -25,75 +25,57 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* Archivos de cabecera POSIX. */
+// Archivos de cabecera POSIX.
 #include <pthread.h>
 #include <semaphore.h>
 #include <ti/posix/tirtos/_pthread.h>
 #include <ti/sysbios/knl/Task.h>
 
-/* Archivos de cabecera para RTOS. */
+// Archivos de cabecera para RTOS.
 #include <ti/sysbios/BIOS.h>
 #include <ti/sysbios/knl/Event.h>
 
-/* Board Support Package. */
+// Board Support Package.
 #include "Drivers/BSP.h"
 
 /* Enumeradores para la descripción del sistema. */
 
-enum FAN        // Para el fan (abanico).
+enum SYSTEM
 {
     On,
-    Auto,
-};
-
-enum SYSTEM     // Para el sistema cuando FAN está en auto (cool, off y heat, o no considerar ninguno y usar fan only).
-{
-    Cool,
     Off,
-    Heat,
-    FanOnly,
+    Up,
+    Down,
 };
 
+/*Se establece una estructura de las entradas que se van a usar*/
 struct EstadoEntradas
 {
     uint8_t  SystemState;
-    uint8_t     FanState;
+    uint8_t  Damper1State;
+    uint8_t  Damper2State;
+    uint8_t  SequenceState;
 }   EstadoEntradas;
 
-// Definiciones Básicas.
+/* Definiciones básicas de puertos y bits que se van a usar.*/
 #define ENTRADA 1
 #define SALIDA 0
 
-// Re-definición de los bits y puertos de entrada a utilizar.
-#define FAN_ON      B3
-#define FAN_AUTO    B4
-#define SYSTEM_COOL B5
-#define SYSTEM_OFF  B6
-#define SYSTEM_HEAT B7
-#define SP_UP       B1
-#define SP_DOWN     B4
+#define SEQUENCE_LEDS_PORT    3
+#define SYSTEM_ON_PORT        3
+#define DAMPERS_PORT          1
+#define SEQUENCE_LEDS_PORTT   P3
+#define SYSTEM_ON_PORTT       P3
+#define DAMPERS_PORTT         P1
+#define SYSTEM_ON_BIT         B5
+#define SEQUENCE_LEDS_BIT     B7
+#define DAMPER1_BIT           B1
+#define DAMPER2_BIT           B4
 
-#define FAN_PORT        2
-#define SYSTEM_PORT     2
-#define SETPOINT_PORT   1
-#define FAN_PORTT        P2
-#define SYSTEM_PORTT     P2
-#define SETPOINT_PORTT   P1
-
-#define TEMP_CH         CH0
-#define HEARTBEAT_CH    CH1
-#define POT_PIN         AN1
-
-// Re-definición de los bits y puertos de salida a utilizar.
-#define FAN_LED     BSP_LED1
-#define HEAT_LED    BSP_LED2
-#define HBeatLED    BSP_LED3
-#define COOL_LED    BSP_LED4
-
-#define FAN_LED_PORT    BSP_LED1_PORT
-#define HEAT_LED_PORT   BSP_LED2_PORT
-#define HB_LED_PORT     BSP_LED3_PORT
-#define COOL_LED_PORT   BSP_LED4_PORT
+/* Canales del ADC que se van a utilizar*/
+#define LUM1    CH8
+#define LUM2    CH9
+#define LUM3    CH10
 
 // Definiciones del estado 'normal' de los botones externos a la tarjeta (solo hay dos botones).
 #define GND 0
@@ -110,29 +92,20 @@ struct EstadoEntradas
 // Definición para el RTOS.
 #define THREADSTACKSIZE1 1500
 
-/* Funciones. */
+/* Funciones que se habilitan con las interrupciones. */
+extern void INT_DAMPERS (void);
+extern void INT_SEQUENCE_LEDS (void);
 
-/* Función de interrupción para botones de setpoint. */
-extern void INT_SWI(void);
-
-/* Funciones de inicialización. */
+// Funciones de inicialización. //
 extern void HVAC_InicialiceIO   (void);
 extern void HVAC_InicialiceADC  (void);
 extern void HVAC_InicialiceUART (void);
 extern void System_InicialiceTIMER (void); // ESTO LO AÑADI PARA UTILIZAR EL "TIMER32"
 
-/* Funciones principales. */
+// Funciones principales.//
 extern void HVAC_ActualizarEntradas(void);
-extern void HVAC_ActualizarSalidas(void);
-extern void HVAC_Heartbeat(void);
 extern void HVAC_PrintState(void);
-
-// Funciones para los estados Heat y Cool.
-extern void HVAC_Heat(void);
-extern void HVAC_Cool(void);
-
-// Funciones para incrementar o disminuir setpoint.
-extern void HVAC_SetPointUp(void);
-extern void HVAC_SetPointDown(void);
+extern void fun_Damper1(void); //Funciones que se usarán cuando haya interrupciones.
+extern void fun_Damper2(void); //
 
 #endif

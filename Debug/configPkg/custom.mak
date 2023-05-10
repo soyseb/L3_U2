@@ -7,5 +7,5 @@
 #       or equal to the generated config header
 #
 linker.cmd: package/cfg/release_pem4f.xdl
-	$(SED) 's"^\"\(package/cfg/release_pem4fcfg.cmd\)\"$""\"C:/Users/intel14/workspace_v10/HVAC_UN_HILO_ORG/Debug/configPkg/\1\""' package/cfg/release_pem4f.xdl > $@
+	$(SED) 's"^\"\(package/cfg/release_pem4fcfg.cmd\)\"$""\"C:/Users/senit/workspace_v12/Lab3/Debug/configPkg/\1\""' package/cfg/release_pem4f.xdl > $@
 	-$(SETDATE) -r:max package/cfg/release_pem4f.h compiler.opt compiler.opt.defs
